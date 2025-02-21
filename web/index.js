@@ -36,7 +36,6 @@ app.post(
 // also add a proxy rule for them in web/frontend/vite.config.js
 
 app.use("/api/*", shopify.validateAuthenticatedSession());
-
 app.use(express.json());
 
 app.get("/api/products/count", async (_req, res) => {
@@ -68,6 +67,12 @@ app.post("/api/products", async (_req, res) => {
   }
   res.status(status).send({ success: status === 200, error });
 });
+
+if (process.env.NODE_ENV !== "production") {
+  app.use("/frontend", (req, res) => {
+    res.redirect(`http://localhost:5173${req.path.replace("/frontend", "")}`);
+  });
+}
 
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
