@@ -1,17 +1,24 @@
-// @ts-check
+import dotenv from 'dotenv'; dotenv.config();
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
-import serveStatic from "serve-static";
 
+// Load the .env file
+dotenv.config();
+
+// Log all environment variables to the console to see what's loaded
+console.log("All environment variables:", process.env);
+
+console.log("Loaded SHOPIFY_APP_URL:", process.env.SHOPIFY_APP_URL);
+console.log("Loaded SHOPIFY_API_KEY:", process.env.SHOPIFY_API_KEY);
+
+// Your remaining code...
+import authRouter from "./routes/auth.js";
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import PrivacyWebhookHandlers from "./privacy.js";
 
-const PORT = parseInt(
-  process.env.BACKEND_PORT || process.env.PORT || "3000",
-  10
-);
+const PORT = 3000;  // Hardcoding the port to 3000
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
@@ -20,7 +27,7 @@ const STATIC_PATH =
 
 const app = express();
 
-// Set up Shopify authentication and webhook handling
+// Shopify auth routes and webhooks
 app.get(shopify.config.auth.path, shopify.auth.begin());
 app.get(
   shopify.config.auth.callbackPath,
@@ -32,11 +39,11 @@ app.post(
   shopify.processWebhooks({ webhookHandlers: PrivacyWebhookHandlers })
 );
 
-// If you are adding routes outside of the /api path, remember to
-// also add a proxy rule for them in web/frontend/vite.config.js
-
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use(express.json());
+
+// OAuth router
+app.use("/api", authRouter);
 
 app.get("/api/products/count", async (_req, res) => {
   const client = new shopify.api.clients.Graphql({
@@ -74,12 +81,8 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-app.use(shopify.cspHeaders());
-app.use(serveStatic(STATIC_PATH, { index: false }));
-
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
-  return res
-    .status(200)
+  res.status(200)
     .set("Content-Type", "text/html")
     .send(
       readFileSync(join(STATIC_PATH, "index.html"))

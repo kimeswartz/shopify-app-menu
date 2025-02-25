@@ -12,11 +12,13 @@
     "deploy": "shopify app deploy"
   },
   "dependencies": {
-    "@shopify/cli": "^3.58.2",
+    "@shopify/shopify-api": "^11.9.0",
     "body-parser": "^1.20.3",
     "cookie": "^1.0.2",
+    "dotenv": "^16.4.7",
     "esbuild": "^0.25.0",
     "express": "^4.21.2",
+    "express-session": "^1.18.1",
     "graphql": "^16.10.0",
     "mongoose": "^8.10.1",
     "path-to-regexp": "^8.2.0",

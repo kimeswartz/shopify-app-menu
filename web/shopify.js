@@ -1,7 +1,9 @@
-import { BillingInterval, LATEST_API_VERSION } from "@shopify/shopify-api";
+import { BillingInterval } from "@shopify/shopify-api";
 import { shopifyApp } from "@shopify/shopify-app-express";
 import { SQLiteSessionStorage } from "@shopify/shopify-app-session-storage-sqlite";
-import { restResources } from "@shopify/shopify-api/rest/admin/2024-10";
+
+// Import the correct version of the REST resources
+import { restResources } from "@shopify/shopify-api/rest/admin/2025-01";  // Update the version here
 
 const DB_PATH = `${process.cwd()}/database.sqlite`;
 
@@ -18,14 +20,14 @@ const billingConfig = {
 
 const shopify = shopifyApp({
   api: {
-    apiVersion: LATEST_API_VERSION,
-    restResources,
+    apiVersion: "2025-01",  // Set to the latest stable version you want to use
+    restResources,          // This will use the 2025-01 version of the REST resources
     future: {
       customerAddressDefaultFix: true,
       lineItemBilling: true,
       unstable_managedPricingSupport: true,
     },
-    billing: undefined, // or replace with billingConfig above to enable example billing
+    billing: undefined,     // or replace with billingConfig above to enable example billing
   },
   auth: {
     path: "/api/auth",
