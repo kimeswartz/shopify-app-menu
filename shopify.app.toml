@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "53b66c4c936a562109e055c305709de1"
-application_url = "https://cumulative-concerns-utc-dominant.trycloudflare.com"
+application_url = "https://shaw-affiliation-documented-sri.trycloudflare.com"
 embedded = true
 name = "my-node-app"
 handle = "my-node-app-345"
@@ -19,9 +19,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://cumulative-concerns-utc-dominant.trycloudflare.com/auth/callback",
-  "https://cumulative-concerns-utc-dominant.trycloudflare.com/auth/shopify/callback",
-  "https://cumulative-concerns-utc-dominant.trycloudflare.com/api/auth/callback"
+  "https://shaw-affiliation-documented-sri.trycloudflare.com/auth/callback",
+  "https://shaw-affiliation-documented-sri.trycloudflare.com/auth/shopify/callback",
+  "https://shaw-affiliation-documented-sri.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
