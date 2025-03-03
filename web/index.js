@@ -3,8 +3,8 @@ import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
 
-// Load the .env file
-dotenv.config();
+
+console.log("Current working directory:", process.cwd());
 
 // Log all environment variables to the console to see what's loaded
 console.log("All environment variables:", process.env);
@@ -12,13 +12,12 @@ console.log("All environment variables:", process.env);
 console.log("Loaded SHOPIFY_APP_URL:", process.env.SHOPIFY_APP_URL);
 console.log("Loaded SHOPIFY_API_KEY:", process.env.SHOPIFY_API_KEY);
 
-// Your remaining code...
 import authRouter from "./routes/auth.js";
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import PrivacyWebhookHandlers from "./privacy.js";
 
-const PORT = 3000;  // Hardcoding the port to 3000
+const PORT = process.env.PORT || 3000;
 
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
