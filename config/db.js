@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const connectDB = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/shopifyApp", {
@@ -13,4 +14,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+export default connectDB;
