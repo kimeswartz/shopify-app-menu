@@ -9,6 +9,7 @@ import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import PrivacyWebhookHandlers from "./privacy.js";
 
+
 const PORT = process.env.PORT || 8080;
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
