@@ -1,25 +1,20 @@
 import express from "express";
-const connectDB = require("./config/db");
-const Settings = require("./models/SettingsModel");
-const app = express();
-const PORT = process.env.PORT || 300;
+import Settings from "../../models/SettingsModel.js"; // Ensure the correct path
 
-connectDB();
+const router = express.Router();
 
-app.use(express.json());
-
-// Hämta inställningar
-app.get("/api/settings", async (req, res) => {
+// Get settings
+router.get("/", async (req, res) => {
   try {
     const settings = await Settings.findOne();
-    req.json(settings);
+    res.json(settings);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Uppdatera inställningar
-app.put("/api/settings", async (req, res) => {
+// Update settings
+router.put("/", async (req, res) => {
   const { color, logo, campaignImage } = req.body;
   try {
     const settings = await Settings.findOneAndUpdate(
@@ -33,6 +28,4 @@ app.put("/api/settings", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
-});
+export default router;
