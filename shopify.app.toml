@@ -1,27 +1,24 @@
-# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
-
 client_id = "53b66c4c936a562109e055c305709de1"
-application_url = "https://shaw-affiliation-documented-sri.trycloudflare.com"
+application_url = "https://dev.pixla.dev"
 embedded = true
 name = "my-node-app"
 handle = "my-node-app-345"
 
 [build]
 include_config_on_deploy = true
-automatically_update_urls_on_dev = true
+automatically_update_urls_on_dev = false
 
 [webhooks]
 api_version = "2025-01"
 
 [access_scopes]
-# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://shaw-affiliation-documented-sri.trycloudflare.com/auth/callback",
-  "https://shaw-affiliation-documented-sri.trycloudflare.com/auth/shopify/callback",
-  "https://shaw-affiliation-documented-sri.trycloudflare.com/api/auth/callback"
+  "https://dev.pixla.dev/auth/callback",
+  "https://dev.pixla.dev/auth/shopify/callback",
+  "https://dev.pixla.dev/api/auth/callback"
 ]
 
 [pos]

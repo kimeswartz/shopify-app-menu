@@ -1,31 +1,25 @@
-import dotenv from 'dotenv'; dotenv.config();
+import dotenv from "dotenv"; dotenv.config();
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
-
-// Load the .env file
-dotenv.config();
-
-// Log all environment variables to the console to see what's loaded
-console.log("All environment variables:", process.env);
-
-console.log("Loaded SHOPIFY_APP_URL:", process.env.SHOPIFY_APP_URL);
-console.log("Loaded SHOPIFY_API_KEY:", process.env.SHOPIFY_API_KEY);
-
-// Your remaining code...
+import connectDB from "./db.js"; // Connect MongoDB
 import authRouter from "./routes/auth.js";
+import settingsRouter from "./routes/settings.js"; // Import settings API
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import PrivacyWebhookHandlers from "./privacy.js";
 
-const PORT = 3000;  // Hardcoding the port to 3000
 
+const PORT = process.env.PORT || 8080;
 const STATIC_PATH =
   process.env.NODE_ENV === "production"
     ? `${process.cwd()}/frontend/dist`
     : `${process.cwd()}/frontend/`;
 
 const app = express();
+
+connectDB(); // Ensure MongoDB is connected
+app.use(express.json());
 
 // Shopify auth routes and webhooks
 app.get(shopify.config.auth.path, shopify.auth.begin());
@@ -40,10 +34,10 @@ app.post(
 );
 
 app.use("/api/*", shopify.validateAuthenticatedSession());
-app.use(express.json());
 
-// OAuth router
+// Add API routes
 app.use("/api", authRouter);
+app.use("/api/settings", settingsRouter); // Mount settings API
 
 app.get("/api/products/count", async (_req, res) => {
   const client = new shopify.api.clients.Graphql({
@@ -91,4 +85,6 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
     );
 });
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(`Server is running on port: ${PORT}`);
+});
