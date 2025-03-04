@@ -2,7 +2,7 @@ import dotenv from "dotenv"; dotenv.config();
 import { join } from "path";
 import { readFileSync } from "fs";
 import express from "express";
-import connectDB from "../config/db.js"; // Connect MongoDB
+import connectDB from "./db.js"; // Connect MongoDB
 import authRouter from "./routes/auth.js";
 import settingsRouter from "./routes/settings.js"; // Import settings API
 import shopify from "./shopify.js";

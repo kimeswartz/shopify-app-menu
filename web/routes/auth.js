@@ -7,7 +7,6 @@ dotenv.config();
 
 // Log the environment variable to ensure it has been loaded correctly
 console.log("SHOPIFY_APP_URL:", process.env.SHOPIFY_APP_URL);
-console.log("Alla miljövariabler:", process.env);
 
 const router = express.Router();
 
